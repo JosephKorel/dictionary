@@ -1,11 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Counter from "./Counter";
 import Input from "./Input";
+import Phonetics from "./Phonetic";
+import List from "./WordList";
 
 function Main() {
-  const [input, setInput] = useState("House");
+  const [input, setInput] = useState("");
   const [word, setWord] = useState([]);
-  const [resultlist, setResultlist] = useState([]);
+  const [meaning, setMeaning] = useState([]);
+  const [error, setError] = useState(false);
+  const [example, setExample] = useState([]);
 
   const dictionaryApi = async () => {
     try {
@@ -13,9 +18,11 @@ function Main() {
         `https://api.dictionaryapi.dev/api/v2/entries/en/${input}`
       );
 
+      setError(false);
       setWord(data.data);
     } catch (error) {
-      console.log("Palavra inválida");
+      setError(true);
+      setMeaning([]);
     }
   };
 
@@ -23,46 +30,42 @@ function Main() {
     dictionaryApi();
   }, [input]);
 
-  function searchWord() {
-    const definition = word[0].meanings[0].definitions;
-    const defMap = definition.map((item) => item.definition);
-    const wordObj = {
-      id: Math.random(),
-      name: input,
-      firstMeaning: defMap[0],
-      secondMeaning: defMap[1],
-      thirdMeaning: defMap[2],
-    };
-
-    setResultlist([...resultlist, wordObj]);
-  }
-
-  function List() {
-    return resultlist.map((item) => (
-      <div key={item.id}>
-        <ul>
-          <li>
-            <h1>{item.name}</h1>
-          </li>
-          <li>{item.firstMeaning}</li>
-          <li>{item.secondMeaning}</li>
-          <li>{item.thirdMeaning}</li>
-        </ul>
-      </div>
-    ));
-  }
-
   return (
     <div>
       <Input
         input={input}
         setInput={setInput}
         word={word}
-        resultlist={resultlist}
-        setResultlist={setResultlist}
-        searchWord={searchWord}
+        meaning={meaning}
+        setMeaning={setMeaning}
+        example={example}
+        setExample={setExample}
+        error={error}
       ></Input>
-      <List></List>
+      {meaning.length != 0 ? (
+        <div>
+          <List
+            input={input}
+            meaning={meaning}
+            error={error}
+            example={example}
+          ></List>
+          <Phonetics error={error} word={word}></Phonetics>
+        </div>
+      ) : (
+        <h1>
+          {error == false || input == ""
+            ? "Why don't you type something?"
+            : "No result was found"}
+        </h1>
+      )}
+      <h1>Paste a text and see the most frequent words</h1>
+      <Counter
+        word={word}
+        setWord={setWord}
+        input={input}
+        setInput={setInput}
+      ></Counter>
     </div>
   );
 }
