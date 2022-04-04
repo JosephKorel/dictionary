@@ -1,12 +1,18 @@
+import { hover } from "@testing-library/user-event/dist/hover";
 import React, { useState } from "react";
+import { searchWord } from "../Tools/functions";
 
 function Counter(props) {
   const [text, setText] = useState("");
   const [textObj, setTextObj] = useState([]);
   const word = props.word;
-  const setWord = props.setWord;
   const input = props.input;
   const setInput = props.setInput;
+  const error = props.error;
+  const setMeaning = props.setMeaning;
+  const setExample = props.setExample;
+
+  const alltext = text.toLowerCase().split(" ");
 
   function checkFrequency() {
     const textArray = text.toLowerCase().split(" ");
@@ -55,10 +61,8 @@ function Counter(props) {
   }
 
   function searchItem(e) {
-    console.log(e.target.id);
     setInput(e.target.id);
-
-    console.log(input);
+    searchWord(e, error, word, setMeaning, setExample);
   }
 
   function Result() {
@@ -84,6 +88,13 @@ function Counter(props) {
     return <div></div>;
   }
 
+  function hoverWord(event) {
+    const value = event.target.innerText;
+    setInput(value);
+    searchWord(event, error, word, setMeaning, setExample);
+    console.log(input);
+  }
+
   return (
     <div>
       <input
@@ -94,7 +105,12 @@ function Counter(props) {
       ></input>
       <button onClick={() => checkFrequency()}>Check frequency</button>
       <button onClick={() => clearInput()}>Clear</button>
-      {text != "" ? <Result></Result> : null}
+      {/*  {text != "" ? <Result></Result> : null} */}
+      <div onClick={(e) => hoverWord(e)}>
+        {alltext.map((item) => (
+          <span> {item}</span>
+        ))}
+      </div>
     </div>
   );
 }

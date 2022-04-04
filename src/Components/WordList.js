@@ -5,6 +5,10 @@ function List(props) {
   const error = props.error;
   const example = props.example;
   const input = props.input;
+  const lastinput = props.lastinput;
+  const saveword = props.saveword;
+  const setSaveword = props.setSaveword;
+  const setLastinput = props.setLastinput;
 
   const meaningList = [];
   for (let i = 0; i < meaning.slice(0, 8).length - 1; i += 2) {
@@ -26,14 +30,27 @@ function List(props) {
     </ul>
   ));
 
+  function saveWord() {
+    setSaveword([...saveword, meaningList.slice(0, 2)]);
+    setLastinput([...lastinput, input[0].toUpperCase() + input.slice(1)]);
+  }
+
   return (
     <div>
-      {error === true ? (
+      {error === true || input === "" ? (
         <h1>No results were found</h1>
       ) : (
         <div>
           <div>
-            <h1>{input[0].toUpperCase() + input.slice(1)}</h1>
+            <ul>
+              <li>
+                <h1>{input[0].toUpperCase() + input.slice(1)}</h1>
+              </li>
+              <li>
+                <button onClick={() => saveWord()}>Save word</button>
+              </li>
+            </ul>
+
             {meaningList}
           </div>
           <div>
@@ -53,9 +70,3 @@ function List(props) {
 }
 
 export default List;
-
-/* {meaningList.map((item) => (
-  <ul>
-    <li key={item.index}>{item}</li>
-  </ul>
-))} */

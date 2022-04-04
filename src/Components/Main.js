@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Counter from "./Counter";
 import Input from "./Input";
 import Phonetics from "./Phonetic";
+import SavedWords from "./SavedWords";
 import List from "./WordList";
 
 function Main() {
@@ -11,6 +12,8 @@ function Main() {
   const [meaning, setMeaning] = useState([]);
   const [error, setError] = useState(false);
   const [example, setExample] = useState([]);
+  const [saveword, setSaveword] = useState([]);
+  const [lastinput, setLastinput] = useState([]);
 
   const dictionaryApi = async () => {
     try {
@@ -36,11 +39,12 @@ function Main() {
         input={input}
         setInput={setInput}
         word={word}
-        meaning={meaning}
         setMeaning={setMeaning}
         example={example}
         setExample={setExample}
         error={error}
+        lastinput={lastinput}
+        setLastinput={setLastinput}
       ></Input>
       {meaning.length != 0 ? (
         <div>
@@ -49,8 +53,12 @@ function Main() {
             meaning={meaning}
             error={error}
             example={example}
+            saveword={saveword}
+            setSaveword={setSaveword}
+            lastinput={lastinput}
+            setLastinput={setLastinput}
           ></List>
-          <Phonetics error={error} word={word}></Phonetics>
+          <Phonetics error={error} word={word} input={input}></Phonetics>
         </div>
       ) : (
         <h1>
@@ -65,7 +73,11 @@ function Main() {
         setWord={setWord}
         input={input}
         setInput={setInput}
+        setExample={setExample}
+        setMeaning={setMeaning}
+        error={error}
       ></Counter>
+      <SavedWords lastinput={lastinput} saveword={saveword}></SavedWords>
     </div>
   );
 }
