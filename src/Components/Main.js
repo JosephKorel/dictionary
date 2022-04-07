@@ -14,6 +14,10 @@ function Main() {
   const [example, setExample] = useState([]);
   const [saveword, setSaveword] = useState([]);
   const [lastinput, setLastinput] = useState([]);
+  const [storedWords, setStoredWords] = useState();
+  const [onlyNoun, setOnlyNoun] = useState([]);
+  const [onlyVerb, setOnlyVerb] = useState([]);
+  const [onlyAdj, setOnlyAdj] = useState([]);
 
   const dictionaryApi = async () => {
     try {
@@ -23,6 +27,7 @@ function Main() {
 
       setError(false);
       setWord(data.data);
+      /* console.log(word[0].phonetic.map((item) => item.text)); */
     } catch (error) {
       setError(true);
       setMeaning([]);
@@ -43,8 +48,6 @@ function Main() {
         example={example}
         setExample={setExample}
         error={error}
-        lastinput={lastinput}
-        setLastinput={setLastinput}
       ></Input>
       {meaning.length != 0 ? (
         <div>
@@ -54,20 +57,27 @@ function Main() {
             error={error}
             example={example}
             saveword={saveword}
+            onlyNoun={onlyNoun}
+            onlyVerb={onlyVerb}
+            onlyAdj={onlyAdj}
             setSaveword={setSaveword}
             lastinput={lastinput}
             setLastinput={setLastinput}
+            setOnlyNoun={setOnlyNoun}
+            setOnlyVerb={setOnlyVerb}
+            setOnlyAdj={setOnlyAdj}
+            storedWords={storedWords}
+            setStoredWords={setStoredWords}
           ></List>
           <Phonetics error={error} word={word} input={input}></Phonetics>
         </div>
       ) : (
-        <h1>
+        <h1 className="text-center">
           {error == false || input == ""
             ? "Why don't you type something?"
             : "No result was found"}
         </h1>
       )}
-      <h1>Paste a text and see the most frequent words</h1>
       <Counter
         word={word}
         setWord={setWord}
@@ -77,7 +87,20 @@ function Main() {
         setMeaning={setMeaning}
         error={error}
       ></Counter>
-      <SavedWords lastinput={lastinput} saveword={saveword}></SavedWords>
+      <SavedWords
+        lastinput={lastinput}
+        saveword={saveword}
+        meaning={meaning}
+        onlyNoun={onlyNoun}
+        onlyVerb={onlyVerb}
+        onlyAdj={onlyAdj}
+        setOnlyNoun={setOnlyNoun}
+        setOnlyVerb={setOnlyVerb}
+        setOnlyAdj={setOnlyAdj}
+        setSaveword={setSaveword}
+        storedWords={storedWords}
+        setStoredWords={setStoredWords}
+      ></SavedWords>
     </div>
   );
 }

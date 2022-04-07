@@ -1,7 +1,7 @@
-import React from "react";
-
 export function searchWord(e, error, word, setMeaning, setExample) {
-  e.preventDefault();
+  if (e) {
+    e.preventDefault();
+  }
   if (error == false) {
     const definitions = word[0].meanings
       .slice(0, 2)
