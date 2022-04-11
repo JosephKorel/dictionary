@@ -19,10 +19,22 @@ function SavedWords(props) {
   const setOnlyAdj = props.setOnlyAdj;
   const setSaveword = props.setSaveword;
   const [render, setRender] = useState([saveword]);
+  const [newNounList, setNewNounList] = useState([]);
 
-  let newNounList = [];
+  let filteredWords = saveword.filter(filterItems);
+
+  function filterItems(name, index, array) {
+    return array.findIndex((item) => item.word === name.word) == index;
+  }
+
   useEffect(() => {
-    setRender(saveword);
+    const filteredNoun = onlyNoun.filter(filterItems);
+    const filteredVerb = onlyVerb.filter(filterItems);
+    const filteredAdj = onlyAdj.filter(filterItems);
+    setOnlyNoun(filteredNoun);
+    setOnlyVerb(filteredVerb);
+    setOnlyAdj(filteredAdj);
+    setRender(filteredWords);
   }, [saveword]);
 
   function removeItem(e) {
@@ -32,24 +44,18 @@ function SavedWords(props) {
     const targetWord = target[0].word;
     /* newList.length == 0 ? setSaveword([]) : setSaveword(newList); */
 
-    /* if (render === onlyNoun) {
-      const newList = onlyNoun.filter((item) => item.word !== targetWord);
-      setOnlyNoun(newList);
-      setRender(onlyNoun);
-    } */
+    setNewNounList(onlyNoun.filter((item) => item.word !== targetWord));
+    newNounList.length == 0 ? setOnlyNoun([]) : setOnlyNoun(newNounList);
 
-    newNounList = onlyNoun.filter((item) => item.word !== targetWord);
-
-    /* newNounList.length == 0 ? setOnlyNoun([]) : setOnlyNoun(newNounList); */
-
-    /*  const newVerbList = onlyVerb.filter((item) => item.word !== targetWord[0]);
+    const newVerbList = onlyVerb.filter((item) => item.word !== targetWord);
     newVerbList.length == 0 ? setOnlyVerb([]) : setOnlyVerb(newVerbList);
 
-    const newAdjList = onlyAdj.filter((item) => item.word !== targetWord[0]);
-    newAdjList.length == 0 ? setOnlyAdj([]) : setOnlyAdj(newAdjList); */
+    const newAdjList = onlyAdj.filter((item) => item.word !== targetWord);
+    newAdjList.length == 0 ? setOnlyAdj([]) : setOnlyAdj(newAdjList);
 
     console.log(onlyNoun);
     console.log(newNounList);
+    console.log(onlyNoun);
   }
 
   return (
@@ -65,7 +71,7 @@ function SavedWords(props) {
             <RowRadioButtonsGroup
               render={render}
               setRender={setRender}
-              saveword={saveword}
+              filteredWords={filteredWords}
               onlyNoun={onlyNoun}
               onlyVerb={onlyVerb}
               onlyAdj={onlyAdj}
@@ -74,7 +80,7 @@ function SavedWords(props) {
               render.length !== 0 ? (
                 render.map((item) => (
                   <div>
-                    <h1>{item.word}</h1>
+                    <h1>{item.word[0].toUpperCase() + item.word.slice(1)}</h1>
                     {item.meaning}
                     <Button
                       id={item.id}
@@ -96,16 +102,6 @@ function SavedWords(props) {
           </AccordionDetails>
         </Accordion>
       </div>
-      {saveword.length != 0 ? (
-        saveword.map((item) => (
-          <div>
-            <h1>{item.word}</h1>
-            {item.meaning}
-          </div>
-        ))
-      ) : (
-        <h1>Não</h1>
-      )}
     </div>
   );
 }

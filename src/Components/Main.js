@@ -19,6 +19,12 @@ function Main() {
   const [onlyVerb, setOnlyVerb] = useState([]);
   const [onlyAdj, setOnlyAdj] = useState([]);
 
+  const [teste, setTeste] = useState({
+    id: Math.random(),
+    word: "",
+    meaning: [],
+  });
+
   const dictionaryApi = async () => {
     try {
       const data = await axios.get(
@@ -27,7 +33,6 @@ function Main() {
 
       setError(false);
       setWord(data.data);
-      /* console.log(word[0].phonetic.map((item) => item.text)); */
     } catch (error) {
       setError(true);
       setMeaning([]);
@@ -68,6 +73,8 @@ function Main() {
             setOnlyAdj={setOnlyAdj}
             storedWords={storedWords}
             setStoredWords={setStoredWords}
+            setTeste={setTeste}
+            teste={teste}
           ></List>
           <Phonetics error={error} word={word} input={input}></Phonetics>
         </div>
@@ -99,7 +106,8 @@ function Main() {
         setOnlyAdj={setOnlyAdj}
         setSaveword={setSaveword}
         storedWords={storedWords}
-        setStoredWords={setStoredWords}
+        setTeste={setTeste}
+        teste={teste}
       ></SavedWords>
     </div>
   );

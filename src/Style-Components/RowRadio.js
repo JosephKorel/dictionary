@@ -19,7 +19,7 @@ export default function RowRadioButtonsGroup(props) {
           value="None"
           control={<Radio />}
           label="None"
-          onClick={() => props.setRender(props.saveword)}
+          onClick={() => props.setRender(props.filteredWords)}
         />
         <FormControlLabel
           value="Noun"
