@@ -42,19 +42,17 @@ function SavedWords(props) {
     const newList = saveword.filter((item) => item.id != targetID);
     const target = saveword.filter((item) => item.id == targetID);
     const targetWord = target[0].word;
-    /* newList.length == 0 ? setSaveword([]) : setSaveword(newList); */
+    setSaveword(saveword.filter((item) => item.id != targetID));
 
-    setNewNounList(onlyNoun.filter((item) => item.word !== targetWord));
-    newNounList.length == 0 ? setOnlyNoun([]) : setOnlyNoun(newNounList);
+    setOnlyNoun(onlyNoun.filter((item) => item.word !== targetWord));
 
-    const newVerbList = onlyVerb.filter((item) => item.word !== targetWord);
-    newVerbList.length == 0 ? setOnlyVerb([]) : setOnlyVerb(newVerbList);
+    setOnlyVerb(onlyVerb.filter((item) => item.word !== targetWord));
 
-    const newAdjList = onlyAdj.filter((item) => item.word !== targetWord);
-    newAdjList.length == 0 ? setOnlyAdj([]) : setOnlyAdj(newAdjList);
+    setOnlyAdj(onlyAdj.filter((item) => item.word !== targetWord));
 
-    console.log(onlyNoun);
-    console.log(newNounList);
+    if (render == onlyNoun) {
+      setRender(onlyNoun);
+    }
     console.log(onlyNoun);
   }
 
