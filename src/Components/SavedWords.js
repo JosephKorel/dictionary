@@ -39,7 +39,6 @@ function SavedWords(props) {
 
   function removeItem(e) {
     const targetID = e.target.id;
-    const newList = saveword.filter((item) => item.id != targetID);
     const target = saveword.filter((item) => item.id == targetID);
     const targetWord = target[0].word;
     setSaveword(saveword.filter((item) => item.id != targetID));
@@ -50,15 +49,14 @@ function SavedWords(props) {
 
     setOnlyAdj(onlyAdj.filter((item) => item.word !== targetWord));
 
-    if (render == onlyNoun) {
+    if (render === onlyNoun) {
       setRender(onlyNoun);
     }
-    console.log(onlyNoun);
   }
 
   return (
     <div>
-      <div className="w-9/12 mx-auto">
+      <div className="w-9/12 mx-auto mt-5 p-5">
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreOutlined />}>
             <Typography>
@@ -78,7 +76,7 @@ function SavedWords(props) {
               render.length !== 0 ? (
                 render.map((item) => (
                   <div>
-                    <h1>{item.word[0].toUpperCase() + item.word.slice(1)}</h1>
+                    <h1>{item.word.toUpperCase()}</h1>
                     {item.meaning}
                     <Button
                       id={item.id}

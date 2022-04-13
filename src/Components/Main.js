@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Counter from "./Counter";
+import Text from "./TextField";
 import Input from "./Input";
-import Phonetics from "./Phonetic";
 import SavedWords from "./SavedWords";
 import List from "./WordList";
 
@@ -18,6 +17,10 @@ function Main() {
   const [onlyNoun, setOnlyNoun] = useState([]);
   const [onlyVerb, setOnlyVerb] = useState([]);
   const [onlyAdj, setOnlyAdj] = useState([]);
+
+  useEffect(() => {
+    document.body.classList.add("bg-[#212121]");
+  }, []);
 
   const [teste, setTeste] = useState({
     id: Math.random(),
@@ -45,21 +48,14 @@ function Main() {
 
   return (
     <div>
-      <Input
-        input={input}
-        setInput={setInput}
-        word={word}
-        setMeaning={setMeaning}
-        example={example}
-        setExample={setExample}
-        error={error}
-      ></Input>
+      <Input input={input} setInput={setInput}></Input>
       {meaning.length != 0 ? (
         <div>
           <List
             input={input}
             meaning={meaning}
             error={error}
+            word={word}
             example={example}
             saveword={saveword}
             onlyNoun={onlyNoun}
@@ -76,16 +72,15 @@ function Main() {
             setTeste={setTeste}
             teste={teste}
           ></List>
-          <Phonetics error={error} word={word} input={input}></Phonetics>
         </div>
       ) : (
-        <h1 className="text-center">
+        <h1 className="text-center text-3xl font-semi font-['Montserrat'] text-[#fafafa]">
           {error == false || input == ""
-            ? "Why don't you type something?"
+            ? "Search for specific words or paste a text below"
             : "No result was found"}
         </h1>
       )}
-      <Counter
+      <Text
         word={word}
         setWord={setWord}
         input={input}
@@ -93,7 +88,7 @@ function Main() {
         setExample={setExample}
         setMeaning={setMeaning}
         error={error}
-      ></Counter>
+      ></Text>
       <SavedWords
         lastinput={lastinput}
         saveword={saveword}

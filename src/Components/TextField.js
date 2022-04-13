@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { searchWord } from "../Tools/functions";
 import { Button } from "@mui/material";
 
-function Counter(props) {
+function Text(props) {
   const [text, setText] = useState("");
   const [textObj, setTextObj] = useState([]);
   const word = props.word;
@@ -15,7 +15,7 @@ function Counter(props) {
 
   const alltext = text.toLowerCase().split(/\s+/);
 
-  function checkFrequency() {
+  /*  function checkFrequency() {
     const textArray = text.toLowerCase().split(" ");
 
     const reducedObj = Object.values(
@@ -54,22 +54,17 @@ function Counter(props) {
       }
     }
     setTextObj(filteredWords);
-  }
+  } */
 
   function clearInput() {
     setText("");
     setTextObj([]);
+    setInput("");
   }
 
   function hoverWord(event) {
     const value = event.target.innerText;
     const filteredValue = value.replace(/[^a-zA-Z]/gm, "");
-    if (value.includes(".")) {
-      const valueArray = value.split("");
-      const itemIndex = valueArray.indexOf(".");
-      const slicedValue = valueArray.slice(1, itemIndex);
-      const newValue = slicedValue.join().replace(/,/g, "");
-    }
 
     setInput(filteredValue);
   }
@@ -79,25 +74,35 @@ function Counter(props) {
   }, [word]);
 
   return (
-    <div>
-      <textarea
-        className="border-solid border-2 border-sky-500 rounded-lg"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      ></textarea>
-      <Button variant="contained" onClick={() => checkFrequency()}>
-        Search Text
-      </Button>
-      <Button variant="contained" onClick={() => clearInput()}>
-        Clear Text
-      </Button>
-      <div onClick={(e) => hoverWord(e)}>
+    <div className="font-[Montserrat] mt-8">
+      <div className="flex justify-center">
+        <textarea
+          className="w-6/12 border-0 rounded-lg text-2xl m-0 overflow-hidden"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        ></textarea>
+        {/*  <Button variant="contained">Search Text</Button> */}
+        <Button
+          variant="contained"
+          onClick={() => clearInput()}
+          style={{ marginLeft: "8px", height: "50px" }}
+        >
+          Clear Text
+        </Button>
+      </div>
+      <div
+        onClick={(e) => hoverWord(e)}
+        className="w-8/12 mx-auto rounded-md text-3xl mt-5 bg-[#f0f4c3] p-2"
+      >
         {alltext.map((item) => (
-          <span> {item}</span>
+          <span className="hover:bg-[#64b5f6] rounded-mg cursor-pointer">
+            {" "}
+            {item}
+          </span>
         ))}
       </div>
     </div>
   );
 }
 
-export default Counter;
+export default Text;
