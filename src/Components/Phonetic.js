@@ -19,8 +19,6 @@ function Phonetics(props) {
     const usAudio = document.getElementById("us");
     const ukAudio = document.getElementById("uk");
 
-    console.log(word[0].phonetics);
-
     return (
       <div>
         {phoneticText !== undefined ? (
@@ -61,7 +59,7 @@ function Phonetics(props) {
             <audio id="uk" controls="" src={ukPronounce[0]}></audio>
           </div>
         ) : (
-          <h1 className="text-center mt-8 font-semibold text-2xl">
+          <h1 className="text-center font-semibold text-2xl">
             No pronounce found
           </h1>
         )}

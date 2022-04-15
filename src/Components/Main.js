@@ -49,8 +49,34 @@ function Main() {
   return (
     <div>
       <Input input={input} setInput={setInput}></Input>
-      {meaning.length != 0 ? (
-        <div>
+      <div className="mx-auto w-10/12 flex justify-evenly align-center">
+        <div className="ml-5 flex-initial w-8/12">
+          <Text
+            word={word}
+            setWord={setWord}
+            input={input}
+            setInput={setInput}
+            setExample={setExample}
+            setMeaning={setMeaning}
+            error={error}
+          ></Text>
+          <SavedWords
+            lastinput={lastinput}
+            saveword={saveword}
+            meaning={meaning}
+            onlyNoun={onlyNoun}
+            onlyVerb={onlyVerb}
+            onlyAdj={onlyAdj}
+            setOnlyNoun={setOnlyNoun}
+            setOnlyVerb={setOnlyVerb}
+            setOnlyAdj={setOnlyAdj}
+            setSaveword={setSaveword}
+            storedWords={storedWords}
+            setTeste={setTeste}
+            teste={teste}
+          ></SavedWords>
+        </div>
+        <div className="flex-1">
           <List
             input={input}
             meaning={meaning}
@@ -73,37 +99,7 @@ function Main() {
             teste={teste}
           ></List>
         </div>
-      ) : (
-        <h1 className="text-center text-3xl font-semi font-['Montserrat'] text-[#fafafa]">
-          {error == false || input == ""
-            ? "Search for specific words or paste a text below"
-            : "No result was found"}
-        </h1>
-      )}
-      <Text
-        word={word}
-        setWord={setWord}
-        input={input}
-        setInput={setInput}
-        setExample={setExample}
-        setMeaning={setMeaning}
-        error={error}
-      ></Text>
-      <SavedWords
-        lastinput={lastinput}
-        saveword={saveword}
-        meaning={meaning}
-        onlyNoun={onlyNoun}
-        onlyVerb={onlyVerb}
-        onlyAdj={onlyAdj}
-        setOnlyNoun={setOnlyNoun}
-        setOnlyVerb={setOnlyVerb}
-        setOnlyAdj={setOnlyAdj}
-        setSaveword={setSaveword}
-        storedWords={storedWords}
-        setTeste={setTeste}
-        teste={teste}
-      ></SavedWords>
+      </div>
     </div>
   );
 }

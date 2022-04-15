@@ -1,7 +1,7 @@
 import { hover } from "@testing-library/user-event/dist/hover";
 import React, { useEffect, useState } from "react";
 import { searchWord } from "../Tools/functions";
-import { Button } from "@mui/material";
+import { Button, Popper } from "@mui/material";
 
 function Text(props) {
   const [text, setText] = useState("");
@@ -73,34 +73,57 @@ function Text(props) {
     if (input) searchWord(undefined, error, word, setMeaning, setExample);
   }, [word]);
 
+  const pasteText = () => {
+    navigator.clipboard
+      .readText()
+      .then((userText) => {
+        setText(userText);
+      })
+      .catch((err) => {
+        console.error("Failed to read clipboard contents: ", err);
+      });
+  };
+
   return (
     <div className="font-[Montserrat] mt-8">
       <div className="flex justify-center">
         <textarea
-          className="w-6/12 border-0 rounded-lg text-2xl m-0 overflow-hidden"
+          className="w-full border-0 rounded-lg text-2xl m-0 overflow-hidden"
           value={text}
           onChange={(e) => setText(e.target.value)}
         ></textarea>
-        {/*  <Button variant="contained">Search Text</Button> */}
-        <Button
-          variant="contained"
-          onClick={() => clearInput()}
-          style={{ marginLeft: "8px", height: "50px" }}
+        <div className="flex flex-col align-center justify-center">
+          <Button
+            variant="contained"
+            onClick={() => clearInput()}
+            style={{ marginLeft: "8px", height: "30px" }}
+          >
+            Clear
+          </Button>
+          <Button
+            variant="contained"
+            onClick={pasteText}
+            style={{ marginLeft: "8px", height: "30px", marginTop: "5px" }}
+          >
+            Paste
+          </Button>
+        </div>
+      </div>
+      {text.length !== 0 ? (
+        <div
+          onClick={(e) => hoverWord(e)}
+          className="w-full mx-auto rounded-md text-3xl mt-5 bg-[#f0f4c3] p-2 max-h-[500px] overflow-auto"
         >
-          Clear Text
-        </Button>
-      </div>
-      <div
-        onClick={(e) => hoverWord(e)}
-        className="w-8/12 mx-auto rounded-md text-3xl mt-5 bg-[#f0f4c3] p-2"
-      >
-        {alltext.map((item) => (
-          <span className="hover:bg-[#64b5f6] rounded-mg cursor-pointer">
-            {" "}
-            {item}
-          </span>
-        ))}
-      </div>
+          {alltext.map((item) => (
+            <span className="hover:bg-[#64b5f6] rounded-mg cursor-pointer">
+              {" "}
+              {item}
+            </span>
+          ))}
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

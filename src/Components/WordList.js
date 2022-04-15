@@ -25,7 +25,10 @@ function List(props) {
         <ul>
           <li className="pb-2">
             <p>
-              <span className="bg-stone-800 text-white rounded-md p-1 font-extrabold">
+              <span
+                id="span"
+                className="bg-stone-800 text-white rounded-md p-1 font-extrabold"
+              >
                 {meaning[i]}
               </span>
               <span className="ml-2 italic">{meaning[i + 1]}</span>
@@ -57,9 +60,13 @@ function List(props) {
       filteredNoun.push(
         <>
           <ul>
-            <li>
-              <span>{nouns[i]} </span>
-              {nouns[i + 1]}
+            <li className="pb-2">
+              <p>
+                <span className="rounded-md p-1 font-extrabold bg-[#fff8f7] text-stone-800">
+                  {nouns[i]}
+                </span>
+                <span className="ml-2 italic">{nouns[i + 1]}</span>
+              </p>
             </li>
           </ul>
         </>
@@ -78,9 +85,13 @@ function List(props) {
       filteredVerb.push(
         <>
           <ul>
-            <li>
-              <span>{verbs[i]} </span>
-              {verbs[i + 1]}
+            <li className="pb-2">
+              <p>
+                <span className="rounded-md p-1 font-extrabold bg-[#fff8f7] text-stone-800">
+                  {verbs[i]}
+                </span>
+                <span className="ml-2 italic">{verbs[i + 1]}</span>
+              </p>
             </li>
           </ul>
         </>
@@ -99,16 +110,18 @@ function List(props) {
       filteredAdj.push(
         <>
           <ul>
-            <li>
-              <span>{adjectives[i]} </span>
-              {adjectives[i + 1]}
+            <li className="pb-2">
+              <p>
+                <span className="rounded-md p-1 font-extrabold bg-[#fff8f7] text-stone-800">
+                  {adjectives[i]}
+                </span>
+                <span className="ml-2 italic">{adjectives[i + 1]}</span>
+              </p>
             </li>
           </ul>
         </>
       );
     }
-
-  let random = Math.random();
 
   let wordObj = {
     id: Math.random(),
@@ -120,6 +133,7 @@ function List(props) {
     id: wordObj.id,
     word: input,
     meaning: filteredNoun,
+    type: "noun",
   };
 
   let verbObj = {
@@ -151,19 +165,26 @@ function List(props) {
   }
 
   const styles = "ml-3 hover:scale-105 rounded-full p-0 cursor-pointer ";
+  const font = input.length >= 9 ? "text-4xl" : "text-5xl";
 
   return (
     <div className="">
       {error === true || input === "" ? (
-        <div></div>
+        <div>
+          <h1 className="mx-auto mt-5 text-center w-9/12 text-3xl font-semi font-['Montserrat'] text-[#fafafa]">
+            {error == false || input == ""
+              ? "Search for specific words or paste some text"
+              : "No result was found"}
+          </h1>
+        </div>
       ) : (
-        <div className="w-full flex-row justify-center items-center font-['Montserrat']">
-          <div>
-            <ul className="w-5/12 flex justify-center items-center pb-4">
+        <div className="w-full flex justify-center items-center font-['Montserrat']">
+          <div className="flex flex-col justify-center items-center">
+            <ul className="mx-auto w-11/12 flex justify-between items-center pb-4">
               <li>
                 <h1
                   id="input-word"
-                  className="text-6xl font-thin p-1 italic text-white"
+                  className={`${font} font-thin p-1 italic text-white`}
                 >
                   {input.toUpperCase()}
                 </h1>
@@ -179,7 +200,7 @@ function List(props) {
                 ></img>
               </li>
             </ul>
-            <div className="mx-auto w-4/5 flex align-center justify-around child:p-4 ">
+            <div className="mx-auto w-full flex flex-col align-center justify-center child:p-4 child:mt-5 ">
               <section className="w-96 bg-ui-blue text-white border-solid border-4 rounded-lg border-ui-blue">
                 <h1 className="text-center font-semibold text-3xl">Meaning</h1>
                 {meaningList}
@@ -193,8 +214,8 @@ function List(props) {
                     {examples}
                   </div>
                 ) : (
-                  <div className="mx-auto">
-                    <h1 className="font-semibold text-2xl mt-8 text-center">
+                  <div className="mx-auto flex flex-col align-center justify-center">
+                    <h1 className="font-semibold text-2xl text-center">
                       No examples were found
                     </h1>
                     <img
@@ -206,7 +227,15 @@ function List(props) {
                 )}
               </section>
               <section className="w-96 bg-ui-blue text-white border-solid border-4 rounded-lg border-ui-blue">
-                <Phonetics error={error} word={word} input={input}></Phonetics>
+                {meaning.length !== 0 ? (
+                  <Phonetics
+                    error={error}
+                    word={word}
+                    input={input}
+                  ></Phonetics>
+                ) : (
+                  <div></div>
+                )}
               </section>
             </div>
           </div>

@@ -7,3 +7,7 @@ body{
   padding: 0;
 }
 
+#save-div #span{
+  color: #292524;
+  background-color: #fff8f7;
+}

@@ -35,6 +35,9 @@ function SavedWords(props) {
     setOnlyVerb(filteredVerb);
     setOnlyAdj(filteredAdj);
     setRender(filteredWords);
+    if (render[0]) {
+      render[0].type === "noun" ? setRender(onlyNoun) : console.log("Aa");
+    }
   }, [saveword]);
 
   function removeItem(e) {
@@ -56,14 +59,34 @@ function SavedWords(props) {
 
   return (
     <div>
-      <div className="w-9/12 mx-auto mt-5 p-5">
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreOutlined />}>
-            <Typography>
+      <div className="w-full mx-auto mt-5">
+        <Accordion
+          style={{
+            backgroundColor: "#1976d2",
+            color: "white",
+            borderRadius: "8px",
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreOutlined style={{ color: "white" }} />}
+          >
+            <Typography
+              style={{
+                fontWeight: "500",
+                fontSize: "1.5rem",
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
               <h1>Saved words</h1>
             </Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails
+            style={{
+              border: "2px solid #1976d2",
+              backgroundColor: "white",
+              borderRadius: "8px",
+            }}
+          >
             <RowRadioButtonsGroup
               render={render}
               setRender={setRender}
@@ -75,13 +98,19 @@ function SavedWords(props) {
             {saveword.length !== 0 ? (
               render.length !== 0 ? (
                 render.map((item) => (
-                  <div>
-                    <h1>{item.word.toUpperCase()}</h1>
+                  <div
+                    id="save-div"
+                    className="bg-stone-800 p-3 rounded-lg font-[Montserrat] mt-5"
+                  >
+                    <h1 className="text-ui-blue text-3xl font-semibold py-3">
+                      {item.word.toUpperCase()}
+                    </h1>
                     {item.meaning}
                     <Button
                       id={item.id}
                       onClick={(e) => removeItem(e)}
                       variant="contained"
+                      style={{ marginTop: "12px" }}
                     >
                       Remove
                     </Button>
@@ -89,11 +118,13 @@ function SavedWords(props) {
                 ))
               ) : (
                 <div>
-                  <h1>No matched results</h1>
+                  <h1 className="text-stone-800">No matched results</h1>
                 </div>
               )
             ) : (
-              <h1>You haven't added any words yet</h1>
+              <h1 className="text-stone-800">
+                You haven't added any words yet
+              </h1>
             )}
           </AccordionDetails>
         </Accordion>

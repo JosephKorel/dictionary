@@ -14,6 +14,7 @@ export default function RowRadioButtonsGroup(props) {
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
         defaultValue="None"
+        style={{ color: "black" }}
       >
         <FormControlLabel
           value="None"
