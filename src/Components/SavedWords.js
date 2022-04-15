@@ -19,7 +19,6 @@ function SavedWords(props) {
   const setOnlyAdj = props.setOnlyAdj;
   const setSaveword = props.setSaveword;
   const [render, setRender] = useState([saveword]);
-  const [newNounList, setNewNounList] = useState([]);
 
   let filteredWords = saveword.filter(filterItems);
 

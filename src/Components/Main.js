@@ -12,8 +12,6 @@ function Main() {
   const [error, setError] = useState(false);
   const [example, setExample] = useState([]);
   const [saveword, setSaveword] = useState([]);
-  const [lastinput, setLastinput] = useState([]);
-  const [storedWords, setStoredWords] = useState();
   const [onlyNoun, setOnlyNoun] = useState([]);
   const [onlyVerb, setOnlyVerb] = useState([]);
   const [onlyAdj, setOnlyAdj] = useState([]);
@@ -21,12 +19,6 @@ function Main() {
   useEffect(() => {
     document.body.classList.add("bg-[#212121]");
   }, []);
-
-  const [teste, setTeste] = useState({
-    id: Math.random(),
-    word: "",
-    meaning: [],
-  });
 
   const dictionaryApi = async () => {
     try {
@@ -49,8 +41,8 @@ function Main() {
   return (
     <div>
       <Input input={input} setInput={setInput}></Input>
-      <div className="mx-auto w-10/12 flex justify-evenly align-center">
-        <div className="ml-5 flex-initial w-8/12">
+      <div className="mx-auto 2xl:w-10/12 flex justify-evenly align-center xl:w-full lg:w-full md:w-full">
+        <div className="ml-5 flex-initial w-8/12 lg:ml-2 lg:w-7/12 md:ml-0 ">
           <Text
             word={word}
             setWord={setWord}
@@ -61,7 +53,6 @@ function Main() {
             error={error}
           ></Text>
           <SavedWords
-            lastinput={lastinput}
             saveword={saveword}
             meaning={meaning}
             onlyNoun={onlyNoun}
@@ -71,9 +62,6 @@ function Main() {
             setOnlyVerb={setOnlyVerb}
             setOnlyAdj={setOnlyAdj}
             setSaveword={setSaveword}
-            storedWords={storedWords}
-            setTeste={setTeste}
-            teste={teste}
           ></SavedWords>
         </div>
         <div className="flex-1">
@@ -88,15 +76,9 @@ function Main() {
             onlyVerb={onlyVerb}
             onlyAdj={onlyAdj}
             setSaveword={setSaveword}
-            lastinput={lastinput}
-            setLastinput={setLastinput}
             setOnlyNoun={setOnlyNoun}
             setOnlyVerb={setOnlyVerb}
             setOnlyAdj={setOnlyAdj}
-            storedWords={storedWords}
-            setStoredWords={setStoredWords}
-            setTeste={setTeste}
-            teste={teste}
           ></List>
         </div>
       </div>
