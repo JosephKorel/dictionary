@@ -35,7 +35,13 @@ function SavedWords(props) {
     setOnlyAdj(filteredAdj);
     setRender(filteredWords);
     if (render[0]) {
-      render[0].type === "noun" ? setRender(onlyNoun) : console.log("Aa");
+      render[0].type === "noun" ? setRender(onlyNoun) : console.log();
+    }
+    if (render[0]) {
+      render[0].type === "verb" ? setRender(onlyVerb) : console.log();
+    }
+    if (render[0]) {
+      render[0].type === "adj" ? setRender(onlyAdj) : console.log();
     }
   }, [saveword]);
 

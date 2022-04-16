@@ -140,12 +140,14 @@ function List(props) {
     id: wordObj.id,
     word: input,
     meaning: filteredVerb,
+    type: "verb",
   };
 
   let adjObj = {
     id: wordObj.id,
     word: input,
     meaning: filteredAdj,
+    type: "adj",
   };
 
   function saveWord() {
